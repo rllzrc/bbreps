@@ -3,6 +3,8 @@ import { render } from 'react-dom';
 // commenting import Pet out after building out Search Params component
 // import Pet from './Pet';
 import SearchParams from './SearchParams';
+import { Router, Link } from '@reach/router';
+import Details from './Details';
 
 const App = () => {
   // return React.createElement("div", { id: "something-important" }, [
@@ -36,10 +38,14 @@ const App = () => {
     // </div>
 
     <div>
-    <h1 id='something-important'>~ Adopt Me !!! ~</h1>
-    <SearchParams />
+      <header>
+        <Link to='/'>~ Adopt Me!!!~</Link>
+      </header>
+      <Router>
+        <SearchParams path='/'/>
+        <Details path='/details/:id'/>
+      </Router>
     </div>
-    
   );
 };
 
