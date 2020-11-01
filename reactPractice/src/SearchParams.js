@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { ANIMALS } from '@frontendmasters/pet';
+import React, { useEffect, useState } from 'react';
+import pet, { ANIMALS } from '@frontendmasters/pet';
 import useDropdown from './useDropdown';
 
 // new component, like a search box 
@@ -14,7 +14,27 @@ const SearchParams = () => {
   // const [breed, setBreed] = useState('');
   const [breeds, setBreeds] = useState([]);
   const [animal, AnimalDropdown] = useDropdown('Animal', 'dog', ANIMALS);
-  const [breed, BreedDropdown] = useDropdown('Breed', '', breeds);
+  const [breed, BreedDropdown, setBreed] = useDropdown('Breed', '', breeds);
+
+  // adding effects - takes the place of life cycle methods like compDidMount, compWillUnmount, compDidUpdate
+  // returns a promise obj
+  // helpful for debugging
+  // useEffect(() => {
+  //   pet.breeds('dog')
+  //   .then(console.log, console.error);
+  // });
+  // this will not run upon the first render
+
+  useEffect(() => {
+    setBreeds([]);
+    setBreed('');
+
+    pet.breeds(animal)
+    .then(({ breeds: apiBreeds }) => {
+      const breedStrings = apiBreeds.map(({ name }) => name);
+      setBreeds(breedStrings);
+    }, console.error)
+  }, [animal, setBreed, setBreeds]);
 
   return (
     <div className='search-params'>
