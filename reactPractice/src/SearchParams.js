@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import pet, { ANIMALS } from '@frontendmasters/pet';
 import useDropdown from './useDropdown';
+import Results from './Results';
 
 // new component, like a search box 
 // form + label = good for accessibility 
@@ -15,6 +16,19 @@ const SearchParams = () => {
   const [breeds, setBreeds] = useState([]);
   const [animal, AnimalDropdown] = useDropdown('Animal', 'dog', ANIMALS);
   const [breed, BreedDropdown, setBreed] = useDropdown('Breed', '', breeds);
+  const [pets, setPets] = useState([]);
+
+  // * guarantees to return a promise
+  // super power = await, wait for this to finish then give me this data
+  async function requestPets() {
+    const { animals } = await pet.animals({
+      location,
+      breed,
+      type: animal
+    })
+    // beauty of await -- you know you will get the above data by the time you reach the line below
+    setPets(animals || []);
+  }
 
   // adding effects - takes the place of life cycle methods like compDidMount, compWillUnmount, compDidUpdate
   // returns a promise obj
@@ -38,7 +52,12 @@ const SearchParams = () => {
 
   return (
     <div className='search-params'>
-      <form>
+      <form 
+        onSubmit={(e) => {
+          e.preventDefault();
+          requestPets();
+        }}
+      >
         <label htmlFor='location'>
           Location
           <input 
@@ -50,6 +69,7 @@ const SearchParams = () => {
         <BreedDropdown />
         <button>Submit</button>
       </form>
+      <Results pets={pets} />
     </div>
   );
 };
