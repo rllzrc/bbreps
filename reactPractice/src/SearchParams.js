@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ANIMALS } from '@frontendmasters/pet';
+import useDropdown from './useDropdown';
 
 // new component, like a search box 
 // form + label = good for accessibility 
@@ -8,9 +9,12 @@ const SearchParams = () => {
 
   // establishing hooks
   const [location, setLocation ] = useState('Seattle, WA');
-  const [animal, setAnimal] = useState('dog');
-  const [breed, setBreed] = useState('');
+  // no longer need separate hooks for animal + breed drop down menu after creating useDropdown custom hook
+  // const [animal, setAnimal] = useState('dog');
+  // const [breed, setBreed] = useState('');
   const [breeds, setBreeds] = useState([]);
+  const [animal, AnimalDropdown] = useDropdown('Animal', 'dog', ANIMALS);
+  const [breed, BreedDropdown] = useDropdown('Breed', '', breeds);
 
   return (
     <div className='search-params'>
@@ -22,7 +26,21 @@ const SearchParams = () => {
           value={location} placeholder='location'
           onChange={e => setLocation(e.target.value)} />
         </label>
-        <label htmlFor='animal'>
+        <AnimalDropdown />
+        <BreedDropdown />
+        <button>Submit</button>
+      </form>
+    </div>
+  );
+};
+
+export default SearchParams;
+
+
+
+// * remove these labels after adding custom udeDropdown component hook -- aka shared generic class that is reusable
+// * just need these two dropdown menus after adding custom hook -- <AnimalDropdown /> <BreedDropdown />
+{/* <label htmlFor='animal'>
           Animal
           <select 
             id='animal'
@@ -50,11 +68,4 @@ const SearchParams = () => {
               </option> 
             ))}
             </select>
-        </label>
-        <button>Submit</button>
-      </form>
-    </div>
-  );
-};
-
-export default SearchParams;
+          </label> */}
