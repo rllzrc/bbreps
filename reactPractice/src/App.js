@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { render } from 'react-dom';
 // commenting import Pet out after building out Search Params component
 // import Pet from './Pet';
 import SearchParams from './SearchParams';
 import { Router, Link } from '@reach/router';
 import Details from './Details';
+import ThemeContext from './ThemeContext';
 
 const App = () => {
+
+  const themeHook = useState('darkblue');
   // return React.createElement("div", { id: "something-important" }, [
   //   React.createElement("h1", {}, "Adopt Me!"),
   //   React.createElement(Pet, {
@@ -27,7 +30,6 @@ const App = () => {
   // ]);
 
   return (
-
     // comment this section out after adding SearchParams component
 
     // <div>
@@ -36,16 +38,17 @@ const App = () => {
     //   <Pet name='Dalton' animal='Dog' breed='Shih-Tzu'/>
     //   <Pet name='Jack Bauer' animal='Cat' breed='Mixed'/>
     // </div>
-
-    <div>
-      <header>
-        <Link to='/'>~ Adopt Me!!!~</Link>
-      </header>
-      <Router>
-        <SearchParams path='/'/>
-        <Details path='/details/:id'/>
-      </Router>
-    </div>
+    <ThemeContext.Provider value={themeHook}>
+      <div>
+        <header>
+          <Link to='/'>~ Adopt Me!!!~</Link>
+        </header>
+        <Router>
+          <SearchParams path='/'/>
+          <Details path='/details/:id'/>
+        </Router>
+      </div>
+    </ThemeContext.Provider>
   );
 };
 
