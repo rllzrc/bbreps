@@ -1,5 +1,7 @@
 // * Practice Reps => { challenges }
 
+const { SSL_OP_EPHEMERAL_RSA } = require("constants");
+
 // * Remove Dupes!
 // create a funciton that takes a string and returns a new string with duplicates removed.
 
@@ -164,4 +166,38 @@ function moveElement(duration, distance, element) {
   }
   // the call back
   requestAnimationFrame(move);
+};
+
+// * PROMISES ~~
+// create a sleep function that takes on parameter (time) and will wait "time" ms
+
+// async function run() {
+//   await sleep(500);
+//   console.log('hello');
+//   await sleep(500);
+//   console.log('world');
+// }
+
+function sleep(time) {
+  // async method use a promise
+  // takes an executer - resolve + reject
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, time)
+  });
+}
+
+// promise-fy function - so you can use .then, .then, etc...
+function promisify(fn) {
+  return function(...args) {
+    return new Promise(function(resolve, reject) {
+      function cb(result) {
+        resolve(result);
+      }
+
+      // calls the cb once the function resolves
+      fn.apply(this, args.concat(cb));
+    });
+  }
 };
