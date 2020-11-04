@@ -121,3 +121,47 @@ function throttle(fn, time) {
 // * T R E E S ~~
 // We have two indentical DOM trees, A and B. For DOM tree A, we have the location of an element. Create a function to find that same element in tree B.
 
+// iterate up until you hit the root node
+// then jump back down
+
+function reversePath(element, root) {
+  // walk back up to the root and record the path
+  const path = [];
+  // create a variable to check where you're at
+  let pointer = element;
+  // iterate and stop once you get to the root
+  while(pointer.parent){
+    const index = pointer.parent.children.indexOf(pointer);
+    path.push(index);
+    // move the pointer since we want to know where the parent is within this array
+    pointer = pointer.parent;
+  } 
+
+  pointer = root;
+  // while there are paths in the array, keep iterating down the tree
+  while(path.length) {
+    pointer = children[path.pop()];
+  } 
+};
+
+// * MOVING ELEMENTS / R E N D E R I N G
+// Create a function to move an element. The function arguments are distance, duration, and element to move.
+
+// not returning anything, just updating the DOM
+function moveElement(duration, distance, element) {
+  const start = performance.now();
+
+  function move(currentTime) {
+    const elapsed = currentTime - start;
+    // ratio of how much time has elapsed
+    const progress = elapsed / duration;
+    const amountToMove = progress * distance;
+    element.style.transform = `translateX(${ amountToMove }px)`;
+
+    if(amountToMove < distance) {
+      requestAnimationFrame(move);
+    }
+  }
+  // the call back
+  requestAnimationFrame(move);
+};
