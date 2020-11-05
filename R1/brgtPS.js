@@ -151,7 +151,13 @@ assert(_.isEqual(expected, result));
 */
 
 const myMapV2 = (arr, cb) => {
+  console.log('inmap:', arr);
   // implement here!
+  const map = myReduce(arr, function(acc, el, i, arr) {
+    acc = [acc]
+    acc.push(cb(el));                
+  });
+  return map;
 }
 
 /*
@@ -162,9 +168,15 @@ const myMapV2 = (arr, cb) => {
 
 const incrementByOneV2 = (arr) => {
   // implement here!
+  console.log(arr);
+  const plusOne = myMap(arr, function(el) {
+    return el + 1;
+  });
+  console.log(plusOne);
+  return plusOne;
 }
 
 // uncomment the next three lines to test
-// result = incrementByOneV2(sourceArr);
-// expected = [43, 4, 57, 101, 79];
-// assert(_.isEqual(expected, result));
+result = incrementByOneV2(sourceArr);
+expected = [4, 57, 101, 79];
+assert(_.isEqual(expected, result));
