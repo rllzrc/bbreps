@@ -1,14 +1,36 @@
+/* flexbox IS NOT the correct way to lay out webpages, GRID is the way to go, but since this hacky way came first (+ support for it is still funky esp w cross browser support), its all over the internet so might as well be familiar with its quirks */
 body {
 	font-family: Arial, Helvetica, sans-serif;
 }
+/* by default flex-direction will be under 'row' & same with 'nowrap' *
+/* flex-flow combines direction and wrap! */
+
+/* in this case, the ul is the flex container and the li is the flex item */
+/* dealing with: distributing items in space, what order (broadly), how will the spaces be distributed bw those boxex, how tall will they be, etc. */
 ul {
 	list-style-type: none;
 	padding: 0;
 	margin: 0;
-	border: 1px dotted red;
+  border: 5px dotted red;
+  display: flex; 
+  /* flex-direction: row;
+  flex-wrap: wrap; */
+  flex-flow: row wrap;
+  justify-content: center;
+  /* don't add height with flexbox, just for demo */
+  height: 400px;
+  align-items: center;
 }
+/* for the children, aka flex items deals mostly with ordering and how wide they are + how they will change their size over dimensions  */
 li {
-	border: 1px solid #999;
+	border: 5px solid #999;
 	margin: 0.5em;
 	padding: 0.5em;
+}
+/* order can be any number you want, by default it will be set to 0 */
+/* PRO-TIP: NEVER use width properties on your flex items, use flex-basis instead -- shorthand is under 'flex' -> properties are grow, shrink, basis ~~!!!! -> default values: grow = 0, shrink = 1, basis = auto */
+.flex2 {
+  border: 5px dashed blue;
+  order: 2;
+  flex: 2 1 25%;
 }
