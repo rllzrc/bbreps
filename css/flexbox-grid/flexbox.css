@@ -31,13 +31,58 @@ div img {
 }
 
 /* grid system -- mobile first! */
+/* PRO TIP!! flex-flow is the shorthand version of flex-direction and flex-wrap. Parent + child, flex box container and items so row must be outside of the container */
+.row {
+  display: flex;
+  flex-flow: row wrap;
+}
 
+/* attribute selector, anything that has 'col-' will be selected */
+[class*='col-'] {
+  margin-left: 4%;
+  flex: 0 0 92%;
+}
+
+.col-1-2,
+.col-1-4 {
+  background-color: #ffc;
+}
+.col-2 {
+  background-color: #ccf;
+}
+.col-3 {
+  background-color: #fcf;
+}
+.col-4 {
+  background-color: #cff;
+}
 
 /* Mobile Landscape Screen Sizes */
 @media only screen and (min-width: 480px)  {
-
+  .col-1-2,
+  .col-2 {
+    flex: 0 0 44%;
+  }
+  .col-1-4,
+  .col-3,
+  .col-4 {
+    flex: 0 0 92%
+  }
 }
 /* Desktop screen Sizes */
+/* PRO-TIP!!! flex properties = grow, shrink, and basis. Basis = 'width'but its flexible, meaning its not relative. */
 @media only screen and (min-width: 768px) {
-
+  .col-1-2,
+  .col-1-4 {
+    flex: 0 0 20%;
+  }
+  .col-2 {
+    flex: 0 0 44%;
+  }
+  .col-3 {
+    flex: 0 0 68%;
+  }
+  .col-4 {
+    flex: 0 0 92%;
+  }
 }
