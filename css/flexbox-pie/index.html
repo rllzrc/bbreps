@@ -5,16 +5,16 @@
 <title>* ~ Pie in the Sky Bakery | Springdale, VT ~ *</title>
 <link href='http://fonts.googleapis.com/css?family=Cabin|Niconne' rel='stylesheet' type='text/css'>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="./floats-styles.css" rel="stylesheet" type="text/css">
+<link href="styles.css" rel="stylesheet" type="text/css">
 </head>
-
 <body>
 <div class="wrapper">
 	<header class="row">
 		<a href="/"><img src="img/logo.png" alt="Pie in the Sky Bakery, Springdale, VT. Click for home."></a>
 	</header>
 	<nav class="row">
-		<ul>
+    <!-- to fix 4% margin gap to line up properly  -->
+		<ul class="full-width">
 			<li><a href="#">Home</a></li>
 			<li><a href="#">Menu</a></li>
 			<li><a href="#">Catering</a></li>
@@ -31,8 +31,9 @@
 			<p>The pie was such a hit with the kids - and their coach - that Merilee started getting requests to bake pies for other occasions: school events, birthdays, even a Pi Day celebration at the local library. Pie in the Sky Bakery was born.</p>
 
 			<p>She got so many orders that her fledgling business soon outgrew her family's kitchen. In 2006, she rented her current location at 34 Main Street, where she and her team of bakers have served up fresh, delicious pies ever since.</p>
-		</article>
-		<div class="col-1">
+    </article>
+    <!-- flex item + flex row, so the asides become the flex items => aka nested grid system **~ -->
+		<div class="col-1-4 row">
 			<aside class="sidebar-primary">
 				<h3>Testimonials</h3>
 				<blockquote>
