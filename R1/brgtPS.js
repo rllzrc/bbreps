@@ -1,5 +1,5 @@
-const _ = require('lodash')
-const assert = require('assert');
+//const _ = require('lodash')
+//const assert = require('assert');
 const sourceArr = [42, 3, 56, 100, 78];
 let result;
 let expected;
@@ -31,17 +31,21 @@ const myMap = (arr, cb) => {
   each element is incremented by 1
 */
 
-const incrementByOne = (arr) => {
-  return myMap(arr, function(el) {
-    return el + 1;
-  });
-}
+const incrementByOne = arr => {
+  return myMap(arr, (el => {
+    return el += 1;
+  }));
+};
 
+// * !<<---- ! myMap & incrementByOne result ---->> 
 // uncomment the next three lines to test
 result = incrementByOne(sourceArr);
-
+console.log('test 1 result:', result);
 expected = [43, 4, 57, 101, 79];
-assert(_.isEqual(expected, result));
+console.log('expected answer:', expected);
+
+// don't uncomment this one below
+// assert(_.isEqual(expected, result));
 
 /*
   Array::filter
@@ -54,16 +58,28 @@ assert(_.isEqual(expected, result));
   called myFilter that takes in an array and a callback
 */
 
+// * myFilter first attempt
+// const myFilter1 = (arr, cb) => {
+//   const output = [];
+//   for(let i = 0; i < arr.length; i += 1) {
+//     // check for truthy/falsy value
+//     if(cb(arr[i])) {
+//       output.push(arr[i]);
+//     };
+//   }
+//   return output;
+// }
+
+// * myFilter refactored:
 const myFilter = (arr, cb) => {
   const output = [];
-  for(let i = 0; i < arr.length; i += 1) {
-    // check for truthy/falsy value
-    if(cb(arr[i])) {
-      output.push(arr[i]);
-    };
-  }
+  arr.forEach(el => {
+    if(cb(el)) {
+      output.push(el);
+    }
+  });
   return output;
-}
+};
 
 /*
   Question 4:
@@ -71,17 +87,23 @@ const myFilter = (arr, cb) => {
   only elements that are greater than 50
 */
 
-const filterGreaterThan50 = (arr) => {
-  // implement here!
-  return myFilter(arr, function(el) {
-    return el > 50
-  });
-}
 
+const filterGreaterThan50 = arr => {
+  return myFilter(arr, (el => {
+    return el > 50;
+  }))
+};
+
+
+// * !<<---- ! myFilter & filterGreaterThan50 result ---->> 
 // uncomment the next three lines to test
 result = filterGreaterThan50(sourceArr);
+console.log('test 2 result:', result);
 expected = [56, 100, 78];
-assert(_.isEqual(expected, result));
+console.log('expected answer:', expected);
+
+// don't uncomment this one below
+// assert(_.isEqual(expected, result));
 
 /*
   Array::reduce
@@ -95,27 +117,40 @@ assert(_.isEqual(expected, result));
   an initial value
 */
 
-const myReduce = (arr, accumFunc, initialValue) => {
+// * first attempt at myReduce 
+// const myReduce = (arr, cb, initialValue) => {
+//   // implement here!
+//   // create a variable to store return value 
+//   let acc;
+//   // edge case check
+//   if(initialValue === undefined) {
+//     initialValue = arr[0];
+//     // remove first element so no dupes later
+//     arr.shift();
+//   }
+//   acc = initialValue; 
+//   // iterate and run cb func result to be acc
+//   // for(let i = 0; i < arr.length; i += 1) {
+//   //   acc = accumFunc(acc, arr[i], i, arr)
+//   // }
+//   arr.forEach((el, i) => {
+//     acc = cb(acc, el, i, arr);
+//   });
+//   return acc;
+// }
+
+// * myReduce refactored!
+const myReduce = (arr, reducer, initialValue) => {
   // implement here!
-  // create a variable to store return value 
   let acc;
-  // edge case check
-  if(initialValue === undefined) {
-    initialValue = arr[0];
-    // remove first element so no dupes later
-    arr.shift();
-  }
-  acc = initialValue; 
-  // iterate and run cb func result to be acc
-  // for(let i = 0; i < arr.length; i += 1) {
-  //   acc = accumFunc(acc, arr[i], i, arr)
-  // }
-  arr.forEach(function(el, i){
-    acc = accumFunc(acc, el, i, arr)
+  acc = initialValue === undefined ? initialValue = arr[0] : acc = initialValue;
+  arr.shift();
+
+  arr.forEach((el, i) => {
+    acc = reducer(acc, el, i, arr);
   });
   return acc;
-}
-
+};
 
 /*
   Question 6:
@@ -123,20 +158,35 @@ const myReduce = (arr, accumFunc, initialValue) => {
   all the elements in the source array
 */
 
-const sumElements = (arr) => {
-  // implement here!
-  let sum = myReduce(arr, function(acc, el, i, arr) {
-    //console.log(el)
-    return acc += el
-  });
-  //console.log(sum)
-  return sum;
-}
 
+// * first attempt at sum elements
+// const sumElements = (arr) => {
+//   // implement here!
+//   let sum = myReduce(arr, function(acc, el, i, arr) {
+//     //console.log(el)
+//     return acc += el
+//   });
+//   //console.log(sum)
+//   return sum;
+// }
+
+// * refactored version of sumElements!!
+const sumElements = arr => {
+  return myReduce(arr, (acc, el, i, arr) => {
+    return acc += el;
+  });
+};
+
+
+// * !<<---- ! myReduce & sumElements result ---->> 
 // uncomment the next three lines to test
 result = sumElements(sourceArr);
+console.log('test 3 result:', result);
 expected = 279;
-assert(_.isEqual(expected, result));
+console.log('expected answer:', expected);
+
+// don't uncomment this one below
+// assert(_.isEqual(expected, result));
 
 /*
   myMapV2 without a for loop
@@ -151,14 +201,21 @@ assert(_.isEqual(expected, result));
 */
 
 const myMapV2 = (arr, cb) => {
-  console.log('inmap:', arr);
-  // implement here!
-  const map = myReduce(arr, function(acc, el, i, arr) {
-    acc = [acc]
-    acc.push(cb(el));                
-  });
-  return map;
-}
+  return myReduce(arr, (acc, el, i, arr => {
+    acc = acc.push(cb(el));
+  }, []));
+
+};
+
+// const myMapV2 = (arr, cb) => {
+//   console.log('inmap:', arr);
+//   // implement here!
+//   const map = myReduce(arr, function(acc, el, i, arr) {
+//     acc = [acc];
+//     acc.push(cb(el));             
+//   }, []);
+//   return map;
+// }
 
 /*
   Question 8:
@@ -176,7 +233,12 @@ const incrementByOneV2 = (arr) => {
   return plusOne;
 }
 
+// * !<<---- ! myMapV2 & incrementByOneV2 result ---->> 
 // uncomment the next three lines to test
 result = incrementByOneV2(sourceArr);
-expected = [4, 57, 101, 79];
-assert(_.isEqual(expected, result));
+console.log('test 4 result:', result);
+expected = [43, 4, 57, 101, 79];
+console.log('expected answer:', expected);
+
+// don't uncomment this one below
+// assert(_.isEqual(expected, result));
