@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+  <title>Document</title>
+  <!-- in case the browser does not understand the picture tag  -->
+  <script>
+    // to add default picture element HTML5 
+    document.createElement("picture");
+  </script>
+  <script src="picturefill.min.js"></script>
+  <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+	<!-- visit http://scottjehl.github.io/picturefill/ for picturefill source, to work with older browsers -->
+	<div class="bkgdimg"></div>
+	<picture>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <source srcset="imgs/peace-pie-original.jpg" media="(min-width: 1200px)">
+    <source srcset="imgs/peace-pie-500.jpg" media="(min-width: 800px)">
+		<img src="img/peace-pie-150.jpg" alt="Peace Pie at appropriate dimension!">
+	</picture>
+</body>
+</html>
