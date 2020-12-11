@@ -139,16 +139,28 @@ console.log('expected answer:', expected);
 //   return acc;
 // }
 
-// * myReduce refactored!
-const myReduce = (arr, reducer, initialValue) => {
-  // implement here!
-  let acc;
-  acc = initialValue === undefined ? initialValue = arr[0] : acc = initialValue;
-  arr.shift();
+// * myReduce with forEach
+// const myReduce = (arr, reducer, initialValue) => {
+//   // implement here!
+//   let acc;
+//   acc = initialValue === undefined ? initialValue = arr[0] : acc = initialValue;
+  
+//   if(initialValue === arr[0]) arr.shift();
 
-  arr.forEach((el, i) => {
-    acc = reducer(acc, el, i, arr);
-  });
+//   arr.forEach((el, i) => {
+//     acc = reducer(acc, el, i, arr);
+//   });
+//   return acc;
+// };
+
+const myReduce = (arr, reducer, initialValue) => {
+  let index = 0;
+  let acc = initialValue ? initialValue : arr[0];
+  if(acc === arr[0]) index = 1;
+
+  for(let i = index; i < arr.length; i += 1) {
+    acc = reducer(acc, arr[i], i, arr);
+  };
   return acc;
 };
 
@@ -199,23 +211,15 @@ console.log('expected answer:', expected);
   for myMap called myMapV2 (hint: can you reuse one of your other functions
   that you just defined?)
 */
+  
 
 const myMapV2 = (arr, cb) => {
-  return myReduce(arr, (acc, el, i, arr => {
-    acc = acc.push(cb(el));
-  }, []));
-
+  const output = [];
+  myReduce(arr, function(acc, el, i, arr) {
+    output.push(cb(el));
+  }, output);
+  return output;
 };
-
-// const myMapV2 = (arr, cb) => {
-//   console.log('inmap:', arr);
-//   // implement here!
-//   const map = myReduce(arr, function(acc, el, i, arr) {
-//     acc = [acc];
-//     acc.push(cb(el));             
-//   }, []);
-//   return map;
-// }
 
 /*
   Question 8:
@@ -223,20 +227,29 @@ const myMapV2 = (arr, cb) => {
   each element is incremented by 1
 */
 
-const incrementByOneV2 = (arr) => {
+  
+const incrementByOneV2 = arr => {
   // implement here!
-  console.log(arr);
-  const plusOne = myMap(arr, function(el) {
+  return myMapV2(arr, function(el) {
     return el + 1;
   });
-  console.log(plusOne);
-  return plusOne;
-}
+};
+
+// const incrementByOneV2 = (arr) => {
+//   // implement here!
+//   console.log(arr);
+//   const plusOne = myMap(arr, function(el) {
+//     return el + 1;
+//   });
+//   console.log(plusOne);
+//   return plusOne;
+// }
 
 // * !<<---- ! myMapV2 & incrementByOneV2 result ---->> 
 // uncomment the next three lines to test
 result = incrementByOneV2(sourceArr);
 console.log('test 4 result:', result);
+// expected = [4, 57, 101, 79];
 expected = [43, 4, 57, 101, 79];
 console.log('expected answer:', expected);
 
