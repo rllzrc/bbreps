@@ -162,7 +162,7 @@ footer a {
 div.row {
   padding: 0 2em;
 }
- nav li,
+  nav li,
   nav li:nth-child(even),
   nav li:nth-child(odd) {
     display: inline-block;
