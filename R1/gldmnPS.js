@@ -31,11 +31,34 @@ const solution1 = S => {
   for(let i = 0; i < input.length; i += 1) {
     // create a variable to store current element in 
     let current = input[i];
-    // check if current element is a number
-    if(Number(current)) {
-      // use Number function to convert the element to a number 
-    }
+    // check if current element is a number, if so, push it into the stack
+
+    // else if current === 'POP'
+    // check if stack is empty, if it is return -1
+    // else, pop it
+    
+    // else if current === 'DUP'
+    // check if stack is empty, if it is return -1 
+    // else, push the last element ??
+
+    // else if current === +
+    // check if stack has only one item, return -1
+    // create a newNum variable to store value of operations in
+    // newNum will equal the last item in stack + the last item in stack
+    // Math.pow it to make sure it is within parmaeters of integers passed --> Math.pow(2, 20)-1
+    // if newNum is greater, than the pow result return -1
+    // else, push newNum into stack 
+
+    // else if current === -
+    // check stack, if only one item, return - 1 same as above for +
+    // same thing, create a variable to store newNum value of stack.pop() - stack.pop()
+    // check if newNum is less than 0, if so return -1
+    // else, push newNum value into stack 
+
   }
+
+  // check if stack is empty, if so return -1
+  // return last item in stack stack[stack.length-1]
 }
 
 function solution(S) {
