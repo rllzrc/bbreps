@@ -54,6 +54,7 @@ const solution1 = S => {
     // same thing, create a variable to store newNum value of stack.pop() - stack.pop()
     // check if newNum is less than 0, if so return -1
     // else, push newNum value into stack 
+    // * subtract second from the first number popped off from the stack 
 
   }
 
